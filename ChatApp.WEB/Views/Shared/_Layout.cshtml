@@ -1,0 +1,47 @@
+﻿@using System.Security.Claims
+
+
+@{
+
+    /*
+    foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
+     {
+    @cookie.Key  @cookie.Value
+    }*/
+}
+@{
+    bool memberSituation = Context.User.Identity.IsAuthenticated;
+}
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="/css/_Layout.css" />
+
+</head>
+<body>
+    <div id="top">
+        başlık
+        <span style="float:right">
+            <a asp-controller="Home" asp-action="Index">Anasayfa</a>
+            @{
+                if (memberSituation == true)
+                {
+                    <a asp-controller="Room" asp-action="Index">Uygulama</a>
+                    <a asp-controller="Home" asp-action="Logout">Çıkış Yap</a><br />
+                    <span>Hoşgeldin @Context.User.Identity.Name</span>
+                }
+                else
+                {
+                    <a asp-controller="Home" asp-action="Login">Giriş Yap</a>
+                    <a asp-controller="Home" asp-action="Register">Üyelik</a>
+                }
+            }
+
+        </span>
+    </div>
+    <div id="bottom">
+        @RenderBody()
+    </div>
+</body>
+</html>

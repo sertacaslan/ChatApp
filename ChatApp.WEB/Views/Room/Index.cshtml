@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <link rel="stylesheet" href="/css/_Room.css" />   
+    <script src="~/lib/aspnet-signalr/signalr.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(() => {
+            const connection = new signalR.HubConnectionBuilder().withUrl("/apphub").build();
+            connection.start();
+            connection.on("listRooms", room => $("#titles").append(room+"<br>"));
+            connection.on("getUserName", username=>$("#username-box").append(username));
+            connection.on("getMessage", gelenveri => $("#message-panel").append("<div class='received-message-box'>" + gelenveri + "</div>"));
+                $("#message-send-btn").click(() => {
+                    let mesajIcerik = $("#new-message-box").val();
+                     $("#message-panel").append("<div class='sended-message-box'>" + mesajIcerik + "</div>");
+                    connection.invoke("SendMessageAsync", mesajIcerik).catch(err => console.warn("mesaj gönderirken hata oluştu" + err));
+                    connection.on("getMessage", gelenveri => $("#message-panel"));
+                });
+        });
+    </script>
+</head>
+<body>
+    <div id="top">
+        <div id="username-box"></div>
+    </div>
+    <div id="left">
+        <div id="titles"></div>
+    </div>
+    <div id="right">
+
+        <div id="message-panel" class="message-panel">
+        </div>
+        <textarea id="new-message-box">yeni gidecek mesaj</textarea>
+        <button id="message-send-btn">Gönder</button>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,45 @@
+﻿@model ChatApp.Application.ViewModels.Member.RegisterMemberVM
+
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+<form method="post" asp-controller="Home" asp-action="Register">
+    <table style="color:white;">
+        <tr>
+            <td>Kullanıcı Adı:</td>
+            <td><input type="text" asp-for="UserName" /><span asp-validation-for="UserName"></span></td>
+        </tr>
+        <tr>
+            <td>    Şifre:</td>
+            <td><input type="password" asp-for="UserPass" /><span asp-validation-for="UserPass"></span></td>
+        </tr>
+        <tr>
+            <td>Mail</td>
+            <td><input type="text" asp-for="UserMail" /><span asp-validation-for="UserMail"></span></td>
+        </tr>
+        <tr>
+            <td>İsim</td>
+            <td><input type="text" asp-for="FirstName" /><span asp-validation-for="FirstName"></span></td>
+        </tr>
+        <tr>
+            <td>Soyisim</td>
+            <td><input type="text" asp-for="LastName" /><span asp-validation-for="LastName"></span></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button>Gönder</button></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @{
+                    if (TempData["err"] != null)
+                    {
+                        <h1>Üyelik işlemi başarısız!</h1>
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+</form>
